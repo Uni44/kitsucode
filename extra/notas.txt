@@ -1,0 +1,33 @@
+- añadir click derecho para editar automaticamente el proyecto y detectar la carpeta root, si no continua.--para continuar con esto se debe crear un compilador y sacarlo a .exe. no anda bien incluso en exe, parece que esta bug hay que probar varias veces si recive el comando y en consola.
+
+- añadir mas botones utiles arriba, terminar utilidad a botones ya creados y darle keybind.
+- añadir un auto formateo.
+- añadir funcion de busqueda y remplazar.
+- añadir un sistema para detectar errores de python.
+- añdir un sistema de versiones y que se pueda añadir al codigo de python y que se guarde en git.
+
+- añadir git.
+
+--extras tatsu:
+- no ejecutar sin tener proyecto abierto.
+- cuando se instalo el theme quedo bugeado y con colores raros.
+- sistema de env para python.
+- añadir instalador de paquetes.
+- añadir un texto especial o el logo del editor en el fondo cuando no hay ningun archivo abierto y ayudar a los nuevos usuarios a crear un nuevo proyecto o abrir uno creado.
+- que cuando expandas las carpetas y se actualize no se vuelvan a contraer todas.
+- añadir icono especial a la carpeta root de un proyecto de kc.
+- no me dejo abrir un main.py de otro proyecto por alguna razon, solo ese archivo, bug.:
+Traceback (most recent call last):
+  File "E:\Proyectos\KitsuCode\editor\project_explorer.py", line 97, in on_item_double_clicked
+    self.file_open_callback(path)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "E:\Proyectos\KitsuCode\editor\editor_window.py", line 199, in open_file_from_tree
+    tab = EditorTab(file_path, self.font_size)
+  File "E:\Proyectos\KitsuCode\editor\editor_tab.py", line 32, in __init__
+    self.editor.setPlainText(f.read())
+                             ~~~~~~^^
+  File "<frozen codecs>", line 325, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa8 in position 1224: invalid start byte
+
+- orden de las cosas en el explorador, tiene que siempre estar primero las carpetas.
+- buscar una mejor forma de testear el programa.

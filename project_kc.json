@@ -1,0 +1,19 @@
+{
+    "name": "KitsuCode",
+    "main_file": "main.py",
+    "run_args": "",
+    "interpreter": "python",
+    "ignore_folders": [
+        "__pycache__",
+        "venv",
+        ".git"
+    ],
+    "include_folders": [
+    "assets", 
+    "themes", 
+    "compilers"
+    ],
+    "icon_app": "assets/favicon.ico",
+    "version_app": "1.0.0",
+    "version": 1
+}
