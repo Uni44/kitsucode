@@ -1,3 +1,4 @@
+from version import __version__
 import sys
 import os
 import ctypes
@@ -21,34 +22,34 @@ def registrar_menu_contextual():
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    # Manejar registro del menú contextual
+    # Manejar registro del men√∫ contextual
     if "--register" in sys.argv:
         estado = registrar_menu_contextual()
         if estado == "registered":
-            QMessageBox.information(None, "KitsuCode", "✅ Menú contextual registrado.")
+            QMessageBox.information(None, "KitsuCode", "‚úÖ Men√∫ contextual registrado.")
         elif estado == "already":
-            QMessageBox.information(None, "KitsuCode", "🦊 Ya estaba registrado.")
+            QMessageBox.information(None, "KitsuCode", "ü¶ä Ya estaba registrado.")
         else:
-            QMessageBox.critical(None, "KitsuCode", "❌ Error al registrar el menú contextual.")
+            QMessageBox.critical(None, "KitsuCode", "‚ùå Error al registrar el men√∫ contextual.")
         sys.exit()
 
-    # Manejar eliminación del menú contextual
+    # Manejar eliminaci√≥n del men√∫ contextual
     if "--unregister" in sys.argv:
         estado = eliminar_menu_contextual()
         if estado == "deleted":
-            QMessageBox.information(None, "KitsuCode", "🗑️ Menú contextual eliminado correctamente.")
+            QMessageBox.information(None, "KitsuCode", "üóëÔ∏è Men√∫ contextual eliminado correctamente.")
         elif estado == "not_found":
-            QMessageBox.information(None, "KitsuCode", "⚠️ El menú contextual ya estaba eliminado.")
+            QMessageBox.information(None, "KitsuCode", "‚ö†Ô∏è El men√∫ contextual ya estaba eliminado.")
         elif estado.startswith("error:"):
             QMessageBox.critical(None, "Error", f"No se pudo eliminar: {estado[7:]}")
         sys.exit()
 
-    # Preguntar si registrar si aún no está
+    # Preguntar si registrar si a√∫n no est√°
     if not is_context_menu_registered():
         respuesta = QMessageBox.question(
             None,
             "Registrar KitsuCode",
-            "¿Deseás agregar KitsuCode al menú contextual del explorador?",
+            "¬øDese√°s agregar KitsuCode al men√∫ contextual del explorador?",
             QMessageBox.Yes | QMessageBox.No
         )
         if respuesta == QMessageBox.Yes:
@@ -56,6 +57,6 @@ if __name__ == "__main__":
 
     # Iniciar el editor normalmente
     window = Editor()
-    window.setWindowTitle("KitsuCode 1.0.0")
+    window.setWindowTitle("KitsuCode " + __version__)
     window.setWindowIcon(QIcon("assets/icon.png"))
     sys.exit(app.exec())

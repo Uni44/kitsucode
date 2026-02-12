@@ -23,56 +23,68 @@ def detectar_tipo_proyecto(project_path):
 def compilar_python(project_path, modo_dev=False, consola=None):
     log("🧠 Detectando configuración de proyecto...", consola)
 
-    main_file = os.path.join(project_path, "main.py")
-
-    if not os.path.exists(main_file):
-        log("❌ No se encontró main.py en el proyecto.", consola)
+    config_path = os.path.join(project_path, "project_kc.json")
+    if not os.path.exists(config_path):
+        log("❌ No se encontró project_kc.json.", consola)
         return
 
-    log(f"📦 Compilando {main_file} a EXE...", consola)
-
-    # Ruta directa al ejecutable de pyinstaller
-    pyinstaller_exe = os.path.abspath("compilers/py/pyinstaller.exe")
-
-    if not os.path.exists(pyinstaller_exe):
-        log("❌ No se encontró pyinstaller.exe en compilers/py/", consola)
-        return
     try:
-        config_path = os.path.join(project_path, "project_kc.json")
         with open(config_path, "r", encoding="utf-8") as f:
             config = json.load(f)
 
-        main_file = config.get("main_file", "main.py")
-        include_folders = config.get("include_folders", [])
-        icon_path = config.get("icon_app", None)
+        main_file = os.path.join(project_path, config.get("main_file", "main.py"))
+        if not os.path.exists(main_file):
+            log(f"❌ No se encontró {main_file}.", consola)
+            return
 
-        args = [
-            pyinstaller_exe,
-            "--onedir",
-            "--noconfirm",  # Evita que pregunte si sobrescribe archivos
-            "--clean",      # Limpia cachés anteriores
-            "--contents-directory", ".",
-        ]
+        pyinstaller_exe = os.path.abspath("compilers/py/pyinstaller.exe")
+        if not os.path.exists(pyinstaller_exe):
+            log("❌ No se encontró pyinstaller.exe en compilers/py/", consola)
+            return
+
+        py_config = config.get("pyinstaller", {})
+
+        # Configuraciones PyInstaller
+        modo = py_config.get("mode", "onedir")
+        contents_dir = py_config.get("contents_directory", ".")
+        show_console = py_config.get("console", False)
+        icon_path = py_config.get("icon_app") or config.get("icon_app", None)
+        include_folders = py_config.get("include_folders") or config.get("include_folders", [])
+
+        args = [pyinstaller_exe, "--noconfirm", "--clean"]
+
+        # Onefile o onedir
+        if modo == "onefile":
+            args.append("--onefile")
+        else:
+            args.append("--onedir")
+
+        # Console o no
+        if not show_console:
+            args.append("--noconsole")
+
+        # Contenido interno
+        args.extend(["--contents-directory", contents_dir])
 
         # Icono
         if icon_path:
             args.extend(["--icon", icon_path])
 
-        # Incluir carpetas
+        # Incluir carpetas adicionales
         for folder in include_folders:
             args.extend(["--add-data", f"{folder};{folder}"])
 
+        # Script principal
         args.append(main_file)
 
-        if modo_dev:
-            subprocess.run(args, cwd=project_path, check=True)
-            log("✅ Compilación exitosa en modo DEV. Proyecto compilado en la carpeta dist.", consola)
-        else:
-            args.append("--noconsole")
-            subprocess.run(args, cwd=project_path, check=True)
-            log("✅ Compilación exitosa. Proyecto compilado en la carpeta dist.", consola)
+        # Ejecutar PyInstaller
+        subprocess.run(args, cwd=project_path, check=True)
+        log(f"✅ Compilación exitosa. Proyecto compilado en la carpeta dist.", consola)
+
     except subprocess.CalledProcessError as e:
         log("❌ Error durante la compilación:\n" + str(e), consola)
+    except Exception as e:
+        log("❌ Error inesperado:\n" + str(e), consola)
 
 def limpiar_build(project_path, consola=None):
     for folder in ["build", "dist", "__pycache__"]:

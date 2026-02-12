@@ -1,4 +1,5 @@
 # editor/menu_manager.py
+from version import __version__
 from PySide6.QtWidgets import QMenuBar, QMenu
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QFileDialog, QMessageBox
@@ -14,7 +15,7 @@ def create_menu(editor):
     # Info
     imagen_item = QMenu("KitsuCode", editor)
     imagen_item.setIcon(QIcon("assets/icon.png"))
-    imagen_item.addAction(QAction("Versión 1.0.0", editor, enabled=False))
+    imagen_item.addAction(QAction("Versión " + __version__, editor, enabled=False))
     imagen_item.addAction(QAction("KitsuCode by Uni44", editor, enabled=False))
     imagen_item.addAction(QAction("Contacto: unigames44@gmail.com", editor, enabled=False))
     menu.addMenu(imagen_item)

@@ -10,6 +10,7 @@ from .config_manager import save_window_state, restore_window_state, CONFIG_PATH
 from .utils import icon_for_file
 import json
 from compiler import compiler_manager
+import chardet
 
 class Editor(QMainWindow):
     def __init__(self):
@@ -100,6 +101,12 @@ class Editor(QMainWindow):
             "interpreter": "python",
             "ignore_folders": ["__pycache__", "venv", ".git"],
             "version_app": "1.0.0",
+            "pyinstaller": {
+                "mode": "onedir",
+                "contents_directory": ".",
+                "console": false,
+                "icon_app": null
+            },
             "version": 1
         }
 
@@ -152,6 +159,12 @@ class Editor(QMainWindow):
                 "interpreter": "python",
                 "ignore_folders": ["__pycache__", "venv", ".git"],
                 "version_app": "1.0.0",
+                "pyinstaller": {
+                    "mode": "onedir",
+                    "contents_directory": ".",
+                    "console": false,
+                    "icon_app": null
+                },
                 "version": 1
             }
             try:
@@ -189,18 +202,23 @@ class Editor(QMainWindow):
             name = os.path.basename(tab.file_path)
             title = f"✏️ {name}" if modified else f"{emoji} {name}"
             self.tabs.setTabText(index, title)
-    
+
     def open_file_from_tree(self, file_path):
-        for i in range(self.tabs.count()):
-            if self.tabs.widget(i).file_path == file_path:
-                self.tabs.setCurrentIndex(i)
-                return
-    
-        tab = EditorTab(file_path, self.font_size)
-        tab.modified_signal.connect(lambda mod, t=tab: self.update_tab_title(t, mod))  # ✅ Conectar señal
-        emoji = icon_for_file(file_path)
-        self.tabs.addTab(tab, f"{emoji} {os.path.basename(file_path)}")
-        self.tabs.setCurrentWidget(tab)
+        try:
+            for i in range(self.tabs.count()):
+                if self.tabs.widget(i).file_path == file_path:
+                    self.tabs.setCurrentIndex(i)
+                    return
+
+            tab = EditorTab(file_path, self.font_size)
+            tab.modified_signal.connect(lambda mod, t=tab: self.update_tab_title(t, mod))  # ✅ Conectar señal
+            emoji = icon_for_file(file_path)
+            self.tabs.addTab(tab, f"{emoji} {os.path.basename(file_path)}")
+            self.tabs.setCurrentWidget(tab)
+        
+        except Exception as e:
+            # Aquí puedes manejar el error, por ejemplo, mostrando un mensaje de error
+            QMessageBox.critical(self, "Error al abrir archivo", f"No se pudo abrir el archivo: {file_path}\nError: {str(e)}")
 
     def close_tab(self, index):
         tab = self.tabs.widget(index)
