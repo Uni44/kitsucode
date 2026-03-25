@@ -16,7 +16,7 @@ def create_menu(editor):
     imagen_item = QMenu("KitsuCode", editor)
     imagen_item.setIcon(QIcon("assets/icon.png"))
     imagen_item.addAction(QAction("Versión " + __version__, editor, enabled=False))
-    imagen_item.addAction(QAction("KitsuCode by Uni44", editor, enabled=False))
+    imagen_item.addAction(QAction("KitsuCode by OTS", editor, enabled=False))
     imagen_item.addAction(QAction("Contacto: unigames44@gmail.com", editor, enabled=False))
     menu.addMenu(imagen_item)
 

@@ -20,6 +20,7 @@ class EditorTab(QWidget):
 
         # Crear editor con numeración y resaltador
         self.editor = CodeEditor()
+        self.editor.editor_tab = self
         self.set_font_size(font_size)
         self.editor.textChanged.connect(self.on_text_changed)
         layout = QVBoxLayout(self)

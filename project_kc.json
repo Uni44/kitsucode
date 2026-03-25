@@ -14,7 +14,7 @@
     "compilers"
     ],
     "icon_app": "assets/favicon.ico",
-    "version_app": "1.1.0",
+    "version_app": "1.2.0",
     "pyinstaller": {
         "mode": "onedir",
         "contents_directory": ".",

@@ -12,6 +12,18 @@ import json
 from compiler import compiler_manager
 import chardet
 
+from PySide6.QtWidgets import QTabBar
+from PySide6.QtCore import Qt
+
+class MiddleClickTabBar(QTabBar):
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MiddleButton:
+            index = self.tabAt(event.pos())
+            if index != -1:
+                self.parent().tabCloseRequested.emit(index)
+                return
+        super().mousePressEvent(event)
+
 class Editor(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -24,6 +36,7 @@ class Editor(QMainWindow):
         self.project_explorer.set_terminal_widget(self.terminal)
 
         self.tabs = QTabWidget()
+        self.tabs.setTabBar(MiddleClickTabBar(self.tabs))
         self.tabs.setMovable(True)
         self.tabs.setTabsClosable(True)
         self.tabs.tabCloseRequested.connect(self.close_tab)
@@ -162,8 +175,8 @@ class Editor(QMainWindow):
                 "pyinstaller": {
                     "mode": "onedir",
                     "contents_directory": ".",
-                    "console": false,
-                    "icon_app": null
+                    "console": False,
+                    "icon_app": None
                 },
                 "version": 1
             }

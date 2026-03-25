@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KitsuCode"
-#define MyAppVersion "1.1.0"
-#define MyAppPublisher "Uni44"
+#define MyAppVersion "1.2.1"
+#define MyAppPublisher "OTS"
 #define MyAppURL "."
 #define MyAppExeName "main.exe"
 

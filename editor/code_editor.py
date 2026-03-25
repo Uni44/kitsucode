@@ -22,6 +22,7 @@ class LineNumberArea(QWidget):
 class CodeEditor(QPlainTextEdit):
     def __init__(self):
         super().__init__()
+        self.editor_tab = None
         self.error_lines = set()
         self.match_lines = set()
         self.last_keypress_time = 0  # Marca de tiempo de la última tecla
@@ -133,9 +134,16 @@ class CodeEditor(QPlainTextEdit):
     def keyPressEvent(self, event):
         cursor = self.textCursor()
         key = event.key()
+        modifiers = event.modifiers()
         tab_spaces = "    "  # 4 espacios
     
         current_time = time.time() * 1000  # Marca de tiempo en milisegundos
+
+        # CTRL + S → guardar
+        if key == Qt.Key_S and modifiers == Qt.ControlModifier:
+            self.editor_tab.save()
+            event.accept()
+            return
     
         # TAB: autocompletar o insertar sangría
         if key == Qt.Key_Tab:

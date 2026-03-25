@@ -7,8 +7,8 @@ import subprocess
 def register_kitsucode_context_menu(exe_path, icon_path):
     try:
         commands = [
-            (r'Directory\\shell\\KitsuCode', "Abrir con KitsuCode"),
-            (r'*\\shell\\KitsuCode', "Abrir con KitsuCode")
+            (r'Directory\shell\KitsuCode', "Abrir con KitsuCode"),
+            (r'*\shell\KitsuCode', "Abrir con KitsuCode")
         ]
 
         for key_path, label in commands:

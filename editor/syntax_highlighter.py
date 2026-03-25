@@ -34,7 +34,7 @@ class PythonHighlighter(QSyntaxHighlighter):
             "intent_line": "#242424"
         }
     
-        json_path = os.path.join(os.path.dirname(__file__), "/themes/vibrant_ink.json")
+        json_path = os.path.join(os.path.dirname(__file__), "/themes/ots.json")
         try:
             with open(json_path, "r") as f:
                 colors = json.load(f)

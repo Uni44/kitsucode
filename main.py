@@ -26,20 +26,20 @@ if __name__ == "__main__":
     if "--register" in sys.argv:
         estado = registrar_menu_contextual()
         if estado == "registered":
-            QMessageBox.information(None, "KitsuCode", "‚úÖ Men√∫ contextual registrado.")
+            QMessageBox.information(None, "KitsuCode", "Menú contextual registrado.")
         elif estado == "already":
-            QMessageBox.information(None, "KitsuCode", "ü¶ä Ya estaba registrado.")
+            QMessageBox.information(None, "KitsuCode", "Ya estaba registrado el contextual.")
         else:
-            QMessageBox.critical(None, "KitsuCode", "‚ùå Error al registrar el men√∫ contextual.")
+            QMessageBox.critical(None, "KitsuCode", "Error al registrar el menú contextual.")
         sys.exit()
 
     # Manejar eliminaci√≥n del men√∫ contextual
     if "--unregister" in sys.argv:
         estado = eliminar_menu_contextual()
         if estado == "deleted":
-            QMessageBox.information(None, "KitsuCode", "üóëÔ∏è Men√∫ contextual eliminado correctamente.")
+            QMessageBox.information(None, "KitsuCode", "Menú contextual eliminado correctamente.")
         elif estado == "not_found":
-            QMessageBox.information(None, "KitsuCode", "‚ö†Ô∏è El men√∫ contextual ya estaba eliminado.")
+            QMessageBox.information(None, "KitsuCode", "El menú contextual ya estaba eliminado.")
         elif estado.startswith("error:"):
             QMessageBox.critical(None, "Error", f"No se pudo eliminar: {estado[7:]}")
         sys.exit()
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         respuesta = QMessageBox.question(
             None,
             "Registrar KitsuCode",
-            "¬øDese√°s agregar KitsuCode al men√∫ contextual del explorador?",
+            "¿Deseás agregar KitsuCode al menú contextual del explorador?",
             QMessageBox.Yes | QMessageBox.No
         )
         if respuesta == QMessageBox.Yes:
